@@ -493,6 +493,8 @@
     <Compile Include="Diagnostics\DictionaryLoggerScope.cs" />
     <Compile Include="EnvironmentSettingNames.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Eventing\CodeDiagnostics\CodeDiagnostic.cs" />
+    <Compile Include="Eventing\CodeDiagnostics\CodeDiagnosticEvent.cs" />
     <Compile Include="Eventing\File\FileEvent.cs" />
     <Compile Include="Eventing\EventSources.cs" />
     <Compile Include="Eventing\File\FileWatcherEventSource.cs" />
