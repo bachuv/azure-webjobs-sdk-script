@@ -268,6 +268,15 @@ namespace Microsoft.Azure.WebJobs.Script.Description
             {
                 traceWriter.Trace(diagnostic.ToString(), diagnostic.Severity.ToTraceLevel(), properties);
             }
+
+            if (Host.InDebugMode && Host.IsPrimary)
+            {
+                var diagnosticsEvent = new CodeDiagnosticEvent(Metadata.Name,
+                    diagnostics.Select(d => d.ToCodeDiagnostic()).ToImmutableArray(),
+                    string.Empty);
+
+                Host.EventManager.Publish(diagnosticsEvent);
+            }
         }
 
         protected virtual void Dispose(bool disposing)
