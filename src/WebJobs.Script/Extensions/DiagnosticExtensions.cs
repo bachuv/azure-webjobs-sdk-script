@@ -17,22 +17,5 @@ namespace Microsoft.Azure.WebJobs.Script.Description
                 .GetProperty("Arguments", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(diagnostic) as object[];
         }
-
-        public static CodeDiagnostic ToCodeDiagnostic(this Diagnostic diagnostic)
-        {
-            FileLinePositionSpan span = diagnostic.Location.GetMappedLineSpan();
-
-            return new CodeDiagnostic
-            {
-                Code = diagnostic.Id,
-                Message = diagnostic.GetMessage(),
-                FileName = span.Path,
-                Severity = diagnostic.Severity,
-                StartLine = span.StartLinePosition.Line + 1,
-                StartColumn = span.StartLinePosition.Character + 1,
-                EndLine = span.EndLinePosition.Line + 1,
-                EndColumn = span.EndLinePosition.Character + 1,
-            };
-        }
     }
 }

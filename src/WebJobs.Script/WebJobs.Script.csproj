@@ -416,7 +416,6 @@
     <Compile Include="Config\FeatureFlags.cs" />
     <Compile Include="Description\Binding\Cardinality.cs" />
     <Compile Include="Description\Compilation\ICompilation.cs" />
-    <Compile Include="Description\DiagnosticExtensions.cs" />
     <Compile Include="Description\DiagnosticSeverityExtensions.cs" />
     <Compile Include="Description\DotNet\Compilation\CSharp\Analyzers\AsyncVoidAnalyzer.cs" />
     <Compile Include="Description\DotNet\Compilation\IDotNetCompilation.cs" />
@@ -502,6 +501,7 @@
     <Compile Include="Eventing\StructuredLogging\StructuredLogEntry.cs" />
     <Compile Include="Eventing\StructuredLogging\StructuredLogEntryEvent.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\DiagnosticExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\FileUtility.cs" />
     <Compile Include="Extensions\FuncExtensions.cs" />
