@@ -271,24 +271,27 @@ namespace Microsoft.Azure.WebJobs.Script.Description
 
             if (Host.InDebugMode && Host.IsPrimary)
             {
-                var logEntry = new StructuredLogEntry("codediagnostic");
-                logEntry.AddProperty("diagnostics", diagnostics.Select(d =>
+                Host.EventManager.Publish(new StructuredLogEntryEvent(() =>
                 {
-                    FileLinePositionSpan span = d.Location.GetMappedLineSpan();
-                    return new
+                    var logEntry = new StructuredLogEntry("codediagnostic");
+                    logEntry.AddProperty("diagnostics", diagnostics.Select(d =>
                     {
-                        code = d.Id,
-                        message = d.GetMessage(),
-                        fileName = span.Path,
-                        severity = d.Severity,
-                        startLine = span.StartLinePosition.Line + 1,
-                        startColumn = span.StartLinePosition.Character + 1,
-                        endLine = span.EndLinePosition.Line + 1,
-                        endColumn = span.EndLinePosition.Character + 1,
-                    };
-                }));
+                        FileLinePositionSpan span = d.Location.GetMappedLineSpan();
+                        return new
+                        {
+                            code = d.Id,
+                            message = d.GetMessage(),
+                            fileName = span.Path,
+                            severity = d.Severity,
+                            startLine = span.StartLinePosition.Line + 1,
+                            startColumn = span.StartLinePosition.Character + 1,
+                            endLine = span.EndLinePosition.Line + 1,
+                            endColumn = span.EndLinePosition.Character + 1,
+                        };
+                    }));
 
-                Host.EventManager.Publish(new StructuredLogEntryEvent(logEntry));
+                    return logEntry;
+                }));
             }
         }
 
