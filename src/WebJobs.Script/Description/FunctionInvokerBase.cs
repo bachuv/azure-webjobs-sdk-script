@@ -268,6 +268,31 @@ namespace Microsoft.Azure.WebJobs.Script.Description
             {
                 traceWriter.Trace(diagnostic.ToString(), diagnostic.Severity.ToTraceLevel(), properties);
             }
+
+            if (Host.InDebugMode && Host.IsPrimary)
+            {
+                Host.EventManager.Publish(new StructuredLogEntryEvent(() =>
+                {
+                    var logEntry = new StructuredLogEntry("codediagnostic");
+                    logEntry.AddProperty("diagnostics", diagnostics.Select(d =>
+                    {
+                        FileLinePositionSpan span = d.Location.GetMappedLineSpan();
+                        return new
+                        {
+                            code = d.Id,
+                            message = d.GetMessage(),
+                            fileName = span.Path,
+                            severity = d.Severity,
+                            startLine = span.StartLinePosition.Line + 1,
+                            startColumn = span.StartLinePosition.Character + 1,
+                            endLine = span.EndLinePosition.Line + 1,
+                            endColumn = span.EndLinePosition.Character + 1,
+                        };
+                    }));
+
+                    return logEntry;
+                }));
+            }
         }
 
         protected virtual void Dispose(bool disposing)
